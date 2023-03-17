@@ -21,7 +21,7 @@ public class Main {
         }
         System.out.println("Please enter port number:");
         int port = Integer.parseInt(scanner.nextLine());
-        Client client = new Client();
+        Client client = new MyClient();
         Listener listener = new Listener();
         client.addListener(listener);
         if (!client.connect(address, port)) {

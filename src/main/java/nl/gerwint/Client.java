@@ -5,14 +5,13 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class Client implements Runnable {
+public abstract class Client implements Runnable {
 
     private Socket socket;
     private BufferedWriter out;
     private BufferedReader in;
-    private List<Listener> listeners = new ArrayList<>();
+    private final List<Listener> listeners = new ArrayList<>();
 
 
     public boolean connect(InetAddress address, int port) {
@@ -46,9 +45,8 @@ public class Client implements Runnable {
 
     public boolean sendCommand(String command) {
         try {
-            String parsedCommand = parseCommand(command);
-            if (parsedCommand != null) {
-                out.write(Objects.requireNonNull(parsedCommand));
+            if (command != null) {
+                out.write(command);
                 out.newLine();
                 out.flush();
             }
@@ -58,9 +56,7 @@ public class Client implements Runnable {
         return true;
     }
 
-    private String parseCommand(String command) {
-        return command;
-    }
+    public abstract String commandReceived(String command);
 
     @Override
     public void run() {
@@ -68,7 +64,7 @@ public class Client implements Runnable {
             String line;
             while ((line = in.readLine()) != null) {
                 for (Listener l : listeners) {
-                    l.messageReceived(line);
+                    l.messageReceived(commandReceived(line));
                 }
             }
         } catch (IOException e) {
