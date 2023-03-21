@@ -21,10 +21,12 @@ public class Main {
         }
         System.out.println("Please enter port number:");
         int port = Integer.parseInt(scanner.nextLine());
+        System.out.println("Please enter your username:");
+        String username = scanner.nextLine();
         Client client = new MyClient();
         Listener listener = new Listener();
         client.addListener(listener);
-        if (!client.connect(address, port)) {
+        if (!client.connect(address, port, username)) {
             System.out.println("ERROR: Something went wrong while connecting");
         } else {
             System.out.println("Connected to server " + address + " on port " + port);

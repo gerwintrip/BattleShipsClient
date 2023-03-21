@@ -13,14 +13,22 @@ public abstract class Client implements Runnable {
     private BufferedReader in;
     private final List<Listener> listeners = new ArrayList<>();
 
-
-    public boolean connect(InetAddress address, int port) {
+    /**
+     * Connects to the server and starts the thread that listens for incoming messages.
+     * The username is sent to the server as soon as the connection is established.
+     * @param address The address of the server.
+     * @param port The port of the server.
+     * @param username The username of the client.
+     * @return True if the connection was established successfully, false otherwise.
+     */
+    public boolean connect(InetAddress address, int port, String username) {
         try {
             socket = new Socket(address, port);
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             Thread c1 = new Thread(this);
             c1.start();
+            sendCommand(username);
             return true;
         } catch (IOException e) {
             return false;
