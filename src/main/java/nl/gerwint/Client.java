@@ -37,6 +37,7 @@ public abstract class Client implements Runnable {
 
     public void close() {
         try {
+            sendCommand("EXIT");
             socket.close();
         } catch (IOException ignored) {
 
@@ -72,7 +73,7 @@ public abstract class Client implements Runnable {
     /**
      * This method is called when a command is received from the server.
      * @param command The command received from the server.
-     * @return The string to be sent to the listeners (the console).
+     * @return The string to be sent to the listeners (by default the console).
      */
     public abstract String commandReceived(String command);
 
