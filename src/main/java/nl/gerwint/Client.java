@@ -77,6 +77,13 @@ public abstract class Client implements Runnable {
      */
     public abstract String commandReceived(String command);
 
+    /**
+     * This method is called when a command is received from the console.
+     * @param command The command received from the console.
+     * @return The string to be sent to the server.
+     */
+    public abstract String handleInput(String command);
+
     @Override
     public void run() {
         try {

@@ -34,7 +34,7 @@ public class Main {
                 //System.out.println("Please enter a new command:");
                 String command = scanner.nextLine();
                 if (!command.equals("quit")) {
-                    if (!client.sendCommand(command)) {
+                    if (!client.sendCommand(client.handleInput(command))) {
                         System.out.println("ERROR:" +
                                 " Something went wrong while sending your command");
                         exit = true;

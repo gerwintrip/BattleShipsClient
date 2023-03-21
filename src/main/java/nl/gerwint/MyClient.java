@@ -6,4 +6,9 @@ public class MyClient extends Client{
     public String commandReceived(String command) {
         return command;
     }
+
+    @Override
+    public String handleInput(String input) {
+        return input;
+    }
 }
