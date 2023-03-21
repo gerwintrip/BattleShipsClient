@@ -51,6 +51,11 @@ public abstract class Client implements Runnable {
         listeners.remove(listener);
     }
 
+    /**
+     * Sends a command to the server.
+     * @param command The command to be sent to the server.
+     * @return True if the command was sent successfully, false otherwise.
+     */
     public boolean sendCommand(String command) {
         try {
             if (command != null) {
@@ -64,6 +69,11 @@ public abstract class Client implements Runnable {
         return true;
     }
 
+    /**
+     * This method is called when a command is received from the server.
+     * @param command The command received from the server.
+     * @return The string to be sent to the listeners (the console).
+     */
     public abstract String commandReceived(String command);
 
     @Override
