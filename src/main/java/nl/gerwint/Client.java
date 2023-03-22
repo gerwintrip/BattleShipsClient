@@ -1,23 +1,26 @@
 package nl.gerwint;
 
+import nl.gerwint.listener.IListener;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Client implements Runnable {
+public class Client implements Runnable {
 
     private Socket socket;
     private BufferedWriter out;
     private BufferedReader in;
-    private final List<Listener> listeners = new ArrayList<>();
+    private final List<IListener> listeners = new ArrayList<>();
 
     /**
      * Connects to the server and starts the thread that listens for incoming messages.
      * The username is sent to the server as soon as the connection is established.
-     * @param address The address of the server.
-     * @param port The port of the server.
+     *
+     * @param address  The address of the server.
+     * @param port     The port of the server.
      * @param username The username of the client.
      * @return True if the connection was established successfully, false otherwise.
      */
@@ -28,36 +31,33 @@ public abstract class Client implements Runnable {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             Thread c1 = new Thread(this);
             c1.start();
-            sendCommand(username);
+            sendMessage(username);
             return true;
         } catch (IOException e) {
             return false;
         }
     }
 
+    /**
+     * Close the connection to the server.
+     * This method should be called when the client is no longer needed.
+     */
     public void close() {
         try {
-            sendCommand("EXIT");
+            sendMessage("EXIT");
             socket.close();
         } catch (IOException ignored) {
 
         }
     }
 
-    public void addListener(Listener listener) {
-        listeners.add(listener);
-    }
-
-    public void removeListener(Listener listener) {
-        listeners.remove(listener);
-    }
-
     /**
      * Sends a command to the server.
+     *
      * @param command The command to be sent to the server.
      * @return True if the command was sent successfully, false otherwise.
      */
-    public boolean sendCommand(String command) {
+    public boolean sendMessage(String command) {
         try {
             if (command != null) {
                 out.write(command);
@@ -71,31 +71,58 @@ public abstract class Client implements Runnable {
     }
 
     /**
-     * This method is called when a command is received from the server.
-     * @param command The command received from the server.
-     * @return The string to be sent to the listeners (by default the console).
+     * Runs the thread that listens for incoming messages.
+     * This method is called when the thread is started.
      */
-    public abstract String commandReceived(String command);
-
-    /**
-     * This method is called when a command is received from the console.
-     * @param command The command received from the console.
-     * @return The string to be sent to the server.
-     */
-    public abstract String handleInput(String command);
-
     @Override
     public void run() {
         try {
             String line;
             while ((line = in.readLine()) != null) {
-                for (Listener l : listeners) {
-                    l.messageReceived(commandReceived(line));
-                }
+                notifyListeners(line);
             }
         } catch (IOException e) {
             System.out.println("Connection Closed");
             close();
         }
     }
+
+    /**
+     * Adds a listener to the client. The listener will be notified when a message is received.
+     * The listener must implement the IMessageListener interface.
+     * <p>
+     * Example:
+     * <pre>
+     *     {@code
+     *     client.addListener(new IMessageListener() {
+     *         @Override
+     *         public void onMessageReceived(String message) {
+     *             System.out.println(message);
+     *         }
+     *     });
+     *     }
+     *     </pre>
+     * </p>
+     *
+     * @param listener The listener to be added.
+     *                 The listener must implement the IListener interface.
+     * @see nl.gerwint.BattleShipsClient#addListener(IListener)
+     * @see nl.gerwint.listener.IListener
+     */
+    public void addListener(IListener listener) {
+        listeners.add(listener);
+    }
+
+    /**
+     * Notifies all listeners that a message has been received.
+     *
+     * @param message The message that has been received.
+     */
+    public void notifyListeners(String message) {
+        for (IListener listener : listeners) {
+            listener.onMessageReceived(message);
+        }
+    }
+
+
 }
