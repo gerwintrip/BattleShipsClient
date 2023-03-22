@@ -1,4 +1,5 @@
 # BattleShipsClient
+Go to [BattleShips](https://github.com/AppleSaph/BattleShips) to find the server. 
 
 This is a client for the Battleships game.
 
@@ -9,7 +10,7 @@ This is a client for the Battleships game.
 4. Enjoy!
 
 ## Server Protocol
-Communication between the client and the server are done using the following protocol:
+Communication between the client and the server is done using the following protocol:
 
 ### Client -> Server
 * 'MOVE\~x\~y' - where x and y are the coordinates of the move
