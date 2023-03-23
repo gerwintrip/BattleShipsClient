@@ -8,6 +8,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Client class that handles the connection to the server.
+ */
 public class Client implements Runnable {
 
     private Socket socket;
@@ -18,7 +21,6 @@ public class Client implements Runnable {
     /**
      * Connects to the server and starts the thread that listens for incoming messages.
      * The username is sent to the server as soon as the connection is established.
-     *
      * @param address  The address of the server.
      * @param port     The port of the server.
      * @param username The username of the client.
@@ -53,7 +55,6 @@ public class Client implements Runnable {
 
     /**
      * Sends a command to the server.
-     *
      * @param command The command to be sent to the server.
      * @return True if the command was sent successfully, false otherwise.
      */
@@ -101,12 +102,9 @@ public class Client implements Runnable {
      *         }
      *     });
      *     }
-     *     </pre>
-     * </p>
-     *
+     * </pre>
      * @param listener The listener to be added.
      *                 The listener must implement the IListener interface.
-     * @see nl.gerwint.BattleShipsClient#addListener(IListener)
      * @see nl.gerwint.listener.IListener
      */
     public void addListener(IListener listener) {
@@ -115,12 +113,11 @@ public class Client implements Runnable {
 
     /**
      * Notifies all listeners that a message has been received.
-     *
      * @param message The message that has been received.
      */
     public void notifyListeners(String message) {
         for (IListener listener : listeners) {
-            listener.onMessageReceived(message);
+            listener.onMessage(message);
         }
     }
 
