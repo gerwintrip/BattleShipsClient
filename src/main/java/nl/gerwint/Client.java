@@ -21,6 +21,7 @@ public class Client implements Runnable {
     /**
      * Connects to the server and starts the thread that listens for incoming messages.
      * The username is sent to the server as soon as the connection is established.
+     *
      * @param address  The address of the server.
      * @param port     The port of the server.
      * @param username The username of the client.
@@ -55,6 +56,7 @@ public class Client implements Runnable {
 
     /**
      * Sends a command to the server.
+     *
      * @param command The command to be sent to the server.
      * @return True if the command was sent successfully, false otherwise.
      */
@@ -103,6 +105,7 @@ public class Client implements Runnable {
      *     });
      *     }
      * </pre>
+     *
      * @param listener The listener to be added.
      *                 The listener must implement the IListener interface.
      * @see nl.gerwint.listener.IListener
@@ -113,11 +116,16 @@ public class Client implements Runnable {
 
     /**
      * Notifies all listeners that a message has been received.
+     *
      * @param message The message that has been received.
      */
     public void notifyListeners(String message) {
-        for (IListener listener : listeners) {
-            listener.onMessage(message);
+        try {
+            for (IListener listener : listeners) {
+                listener.onMessage(EventType.valueOf(message.split("~")[0]), message);
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid message received: " + message);
         }
     }
 
