@@ -8,6 +8,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Client class that handles the connection to the server.
+ */
 public class Client implements Runnable {
 
     private Socket socket;
@@ -101,12 +104,10 @@ public class Client implements Runnable {
      *         }
      *     });
      *     }
-     *     </pre>
-     * </p>
+     * </pre>
      *
      * @param listener The listener to be added.
      *                 The listener must implement the IListener interface.
-     * @see nl.gerwint.BattleShipsClient#addListener(IListener)
      * @see nl.gerwint.listener.IListener
      */
     public void addListener(IListener listener) {
@@ -119,8 +120,12 @@ public class Client implements Runnable {
      * @param message The message that has been received.
      */
     public void notifyListeners(String message) {
-        for (IListener listener : listeners) {
-            listener.onMessageReceived(message);
+        try {
+            for (IListener listener : listeners) {
+                listener.onMessage(EventType.valueOf(message.split("~")[0]), message);
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid message received: " + message);
         }
     }
 
