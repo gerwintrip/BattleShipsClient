@@ -4,10 +4,10 @@ Go to [BattleShips](https://github.com/AppleSaph/BattleShips) to find the server
 This is a client for the Battleships game.
 
 ## How to run
-1. Clone the repository
-2. Run the Main class
-3. Enter the server address, port and username
-4. Enjoy!
+1. Download the latest release
+2. Add release as module dependency in project
+3. Make new MyBattleShipsClient class that extends from BattleShipsClient
+4. Implement abstract methods.
 
 ## Server Protocol
 Communication between the client and the server is done using the following protocol:
