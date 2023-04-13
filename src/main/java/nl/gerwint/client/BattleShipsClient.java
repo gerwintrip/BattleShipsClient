@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 @SuppressWarnings({"EmptyMethod", "unused"})
 public abstract class BattleShipsClient {
 
-    private static Client client;
+    private Client client;
 
     /**
      * Instantiates a new BattleShipsClient.
