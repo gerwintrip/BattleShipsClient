@@ -6,7 +6,7 @@ This is the client for the BattleShips game. The server can be found at [BattleS
 ## Installation
 1. Download the latest [releases](https://github.com/gerwintrip/BattleShipsClient/releases).
 2. Create a new Java project in IntellIJ.
-3. Add both jar files as a module dependency in the project. To do this, press `Ctrl+Alt+Shift+S` to open the Project Structure menu. From here navigate to `Modules` and then `Dependencies`. Click on the `+` icon and choose to add `JARs or Directories...`. Locate the downloaded jar files and click on `OK`.
+3. Add both jar files as a module dependency in the project. To do this, press `Ctrl+Alt+Shift+S` to open the Project Structure menu. From here navigate to `Libraries`. Click on the `+` icon and choose to add `Java`. Locate the downloaded jar files and click on `OK`. Once both libraries have been added, apply changes and close the menu.
 4. Create your own client class, for example `MyBattleShipClient`, and make sure it inherits the `BattleShipsClient` class.
 5. Create a `Main` class and declare a new instance of your own client in its main method.
 6. Build your own user interface, for example by using the command line, to listen to events from and to send commands to the server.
