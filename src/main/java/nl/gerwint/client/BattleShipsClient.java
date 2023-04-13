@@ -1,4 +1,4 @@
-package nl.gerwint;
+package nl.gerwint.client;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -63,7 +63,7 @@ public abstract class BattleShipsClient {
      * @param message The message to be sent to the server.
      *                The message should be in the format of a command.
      *                e.g. "MOVE~10~12"
-     * @see nl.gerwint.Client#sendMessage(String)
+     * @see Client#sendMessage(String)
      */
     public void sendCommand(String message) {
         if (!client.sendMessage(message)) {
@@ -75,7 +75,7 @@ public abstract class BattleShipsClient {
      * Closes the connection to the server.
      * This method should be called when the client is no longer needed.
      *
-     * @see nl.gerwint.Client#close()
+     * @see Client#close()
      */
     public void close() {
         client.close();
@@ -87,7 +87,7 @@ public abstract class BattleShipsClient {
      *
      * @param message The message is in the format of a command.
      *                e.g. "HIT~10~12~3"
-     * @see nl.gerwint.listener.IListener#onMessage(EventType, String)
+     * @see nl.gerwint.client.listener.IListener#onMessage(EventType, String)
      */
     private void onEventReceived(EventType type, String message) {
         String[] split = message.split("~");

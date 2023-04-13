@@ -1,6 +1,6 @@
-package nl.gerwint;
+package nl.gerwint.client;
 
-import nl.gerwint.listener.IListener;
+import nl.gerwint.client.listener.IListener;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -108,7 +108,7 @@ public class Client implements Runnable {
      *
      * @param listener The listener to be added.
      *                 The listener must implement the IListener interface.
-     * @see nl.gerwint.listener.IListener
+     * @see nl.gerwint.client.listener.IListener
      */
     public void addListener(IListener listener) {
         listeners.add(listener);

@@ -1,4 +1,4 @@
-package nl.gerwint;
+package nl.gerwint.client;
 
 @SuppressWarnings("SpellCheckingInspection")
 public enum EventType {
