@@ -3,6 +3,8 @@ BattleShips is a simple game where there is a 2 dimensional grid of 25 by 25 til
 
 This is the client for the BattleShips game. The server can be found at [BattleShips](https://github.com/AppleSaph/BattleShips).
 
+A reference client made with Spigot can be found at [BattleShipsClient](https://github.com/Bloedarend/BattleShipsClient).
+
 ## Installation
 1. Download the latest [releases](https://github.com/gerwintrip/BattleShipsClient/releases).
 2. Create a new Java project in IntellIJ.
